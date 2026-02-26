@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cute Ghostty - The Cutest Terminal Emulator</title>
   <meta name="description" content="Cute Ghostty is a cute customized build of Ghostty, the fast and feature-rich terminal emulator for macOS.">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -217,6 +219,13 @@
       width: 180px;
       height: 200px;
       filter: drop-shadow(0 20px 60px var(--glow-pink));
+    }
+
+    .hero-icon {
+      width: 180px;
+      height: 180px;
+      border-radius: 36px;
+      filter: drop-shadow(0 20px 60px var(--glow-pink)) drop-shadow(0 0 40px rgba(255, 133, 184, 0.2));
     }
 
     .hero h1 {
@@ -693,6 +702,112 @@
       .hero { padding: 100px 16px 60px; }
     }
 
+    /* ─── About Banner ─── */
+    .about-banner {
+      max-width: 900px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255, 133, 184, 0.06), rgba(200, 162, 240, 0.06), rgba(168, 230, 207, 0.06));
+      border: 1.5px solid rgba(200, 162, 240, 0.12);
+      border-radius: 24px;
+      padding: 48px;
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-icon-wrap {
+      flex-shrink: 0;
+    }
+
+    .about-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      filter: drop-shadow(0 12px 30px var(--glow-pink));
+    }
+
+    .about-content { flex: 1; }
+
+    .about-content h2 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .about-content p {
+      color: var(--text-dim);
+      font-size: 16px;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    .about-content p:last-of-type { margin-bottom: 20px; }
+
+    .about-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .about-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: rgba(200, 162, 240, 0.1);
+      border: 1px solid rgba(200, 162, 240, 0.15);
+      border-radius: 100px;
+      color: var(--lavender);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .about-link:hover {
+      background: rgba(200, 162, 240, 0.18);
+      border-color: var(--lavender);
+    }
+
+    .about-link-gh {
+      color: var(--mint);
+      background: rgba(168, 230, 207, 0.1);
+      border-color: rgba(168, 230, 207, 0.15);
+    }
+
+    .about-link-gh:hover {
+      background: rgba(168, 230, 207, 0.18);
+      border-color: var(--mint);
+    }
+
+    .oss-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      padding: 5px 14px;
+      background: rgba(168, 230, 207, 0.1);
+      border: 1px solid rgba(168, 230, 207, 0.15);
+      border-radius: 100px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--mint);
+    }
+
+    @media (max-width: 768px) {
+      .about-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 32px 24px;
+        gap: 24px;
+      }
+      .about-links { justify-content: center; }
+    }
+
     /* ─── Cute decorative divider ─── */
     .cute-divider {
       text-align: center;
@@ -711,7 +826,7 @@
   <!-- Nav -->
   <nav>
     <a href="#" class="nav-logo">
-      <span class="nav-ghost">👻</span>
+      <img src="icon.png" alt="Cute Ghostty" style="width: 32px; height: 32px; border-radius: 8px;">
       <span class="nav-title">Cute Ghostty</span>
     </a>
     <ul class="nav-links">
@@ -729,37 +844,7 @@
     <div class="hero-glow hero-glow-3"></div>
 
     <div class="hero-ghost-art">
-      <svg class="ghost-svg" viewBox="0 0 200 230" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Ghost body -->
-        <ellipse cx="100" cy="95" rx="72" ry="78" fill="url(#ghostGrad)"/>
-        <!-- Ghost tail/bottom waves -->
-        <path d="M28 95 L28 180 Q44 160 60 180 Q76 200 92 180 Q108 160 124 180 Q140 200 156 180 Q172 160 172 180 L172 95" fill="url(#ghostGrad)"/>
-        <!-- Blush cheeks -->
-        <ellipse cx="60" cy="115" rx="16" ry="10" fill="#FF85B8" opacity="0.4"/>
-        <ellipse cx="140" cy="115" rx="16" ry="10" fill="#FF85B8" opacity="0.4"/>
-        <!-- Eyes - kawaii style -->
-        <ellipse cx="72" cy="100" rx="10" ry="12" fill="#1A1225"/>
-        <ellipse cx="128" cy="100" rx="10" ry="12" fill="#1A1225"/>
-        <!-- Eye sparkles -->
-        <circle cx="76" cy="94" r="4" fill="white"/>
-        <circle cx="132" cy="94" r="4" fill="white"/>
-        <circle cx="69" cy="98" r="2" fill="white" opacity="0.6"/>
-        <circle cx="125" cy="98" r="2" fill="white" opacity="0.6"/>
-        <!-- Cute mouth -->
-        <path d="M90 118 Q100 128 110 118" stroke="#1A1225" stroke-width="3" stroke-linecap="round" fill="none"/>
-        <!-- Sparkles around ghost -->
-        <path d="M170 50 L174 60 L184 56 L176 64 L182 72 L174 68 L170 78 L166 68 L158 72 L164 64 L156 56 L166 60 Z" fill="#FFF3B0" opacity="0.8"/>
-        <path d="M36 45 L38 51 L44 49 L40 53 L44 58 L38 56 L36 62 L34 56 L28 58 L32 53 L28 49 L34 51 Z" fill="#FFB2D9" opacity="0.7" transform="scale(0.7) translate(20, 20)"/>
-        <!-- Heart -->
-        <path d="M165 30 C165 26, 170 22, 174 26 C178 22, 183 26, 183 30 C183 36, 174 42, 174 42 C174 42, 165 36, 165 30Z" fill="#FF85B8" opacity="0.6"/>
-        <defs>
-          <linearGradient id="ghostGrad" x1="28" y1="17" x2="172" y2="200" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#FFD6EB"/>
-            <stop offset="0.5" stop-color="#FFB2D9"/>
-            <stop offset="1" stop-color="#E8D5FF"/>
-          </linearGradient>
-        </defs>
-      </svg>
+      <img src="icon.png" alt="Cute Ghostty" class="hero-icon">
     </div>
 
     <h1>
@@ -847,6 +932,40 @@
           <span class="feature-icon">&#128038;</span>
           <h3 class="feature-title">Open Source</h3>
           <p class="feature-desc">Free and open source, built on the amazing Ghostty project. Contribute, customize, and share the cuteness with everyone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cute-divider">&#10023; &#10023; &#10023;</div>
+
+  <!-- About / Open Source -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-banner reveal">
+        <div class="about-icon-wrap">
+          <img src="icon.png" alt="Cute Ghostty Icon" class="about-icon">
+        </div>
+        <div class="about-content">
+          <span class="oss-badge">Open Source</span>
+          <h2>Built on Ghostty</h2>
+          <p>
+            Cute Ghostty is <strong>the same Ghostty you already know and love</strong> &mdash; just with cute pastel colours, adorable emojis, and a kawaii icon. Under the hood it's 100% Ghostty: the same blazing-fast GPU-accelerated terminal, the same features, the same reliability.
+          </p>
+          <p>
+            <a href="https://ghostty.org" target="_blank" style="color: var(--pink); text-decoration: none; font-weight: 700;">Ghostty</a> is an incredible open-source terminal emulator created by Mitchell Hashimoto. We just made it cuter. The full source is on GitHub &mdash; contributions, issues, and stars are all welcome!
+          </p>
+          <div class="about-links">
+            <a href="https://github.com/amywork777/CuteGhostty" target="_blank" class="about-link about-link-gh">
+              GitHub Repo
+            </a>
+            <a href="https://ghostty.org" target="_blank" class="about-link">
+              Ghostty.org
+            </a>
+            <a href="https://github.com/ghostty-org/ghostty" target="_blank" class="about-link">
+              Ghostty Source
+            </a>
+          </div>
         </div>
       </div>
     </div>
