@@ -17,15 +17,18 @@ Cute Ghostty is [Ghostty](https://ghostty.org) with a cute makeover. It's the ex
 
 [Ghostty](https://github.com/ghostty-org/ghostty) is an incredible open-source terminal emulator created by Mitchell Hashimoto.
 
-## Download
+## Download & Install
 
-Grab `CuteGhostty.zip` from this repo or from [Releases](https://github.com/amywork777/CuteGhostty/releases).
+The app is right here in the repo. Clone it and you're done:
 
-### Install
+```bash
+git clone https://github.com/amywork777/CuteGhostty.git
+cp -R "CuteGhostty/Cute Ghostty.app" /Applications/
+```
 
-1. Download and unzip `CuteGhostty.zip`
-2. Drag **Cute Ghostty.app** to your Applications folder
-3. On first launch, right-click the app and select "Open" to bypass Gatekeeper
+Or just download from [Releases](https://github.com/amywork777/CuteGhostty/releases) if you prefer a zip.
+
+On first launch, right-click the app and select "Open" to bypass Gatekeeper.
 
 ### Requirements
 
@@ -42,22 +45,10 @@ Grab `CuteGhostty.zip` from this repo or from [Releases](https://github.com/amyw
 ## Repo Structure
 
 ```
-CuteGhostty.zip          # Ready-to-install app bundle (universal binary)
-app-resources/
-  Ghostty.icns            # Custom app icon (Apple icon format)
-  icon-512.png            # Icon at 512px for previews
-  icon-1024.png           # Icon at 1024px for previews
-  Info.plist              # App bundle configuration (bundle ID, name, etc.)
-```
-
-### App Bundle Structure (inside the zip)
-
-```
-Cute Ghostty.app/
+Cute Ghostty.app/         # The full app bundle - ready to run
   Contents/
-    Info.plist            # Bundle config: com.amy.cute-ghostty
-    MacOS/
-      ghostty             # Universal binary (arm64 + x86_64)
+    Info.plist            # Bundle config (com.amy.cute-ghostty)
+    MacOS/ghostty         # Universal binary (arm64 + x86_64)
     Resources/
       Ghostty.icns        # Cute app icon
       Assets.car          # Compiled asset catalog
@@ -65,13 +56,16 @@ Cute Ghostty.app/
       terminfo/           # Terminal info database
       vim/                # Vim syntax highlighting for ghostty config
       bash-completion/    # Shell completions
-      zsh/                # Shell completions
-      fish/               # Shell completions
+      zsh/, fish/         # More shell completions
       man/                # Man pages
     Frameworks/           # Embedded frameworks
-    PlugIns/
-      DockTilePlugin.plugin/  # Dock tile customization
+    PlugIns/              # Dock tile plugin
     _CodeSignature/       # Code signing data
+app-resources/            # Extracted assets for easy editing
+  Ghostty.icns            # The cute icon (Apple icon format)
+  icon-512.png            # Icon preview at 512px
+  icon-1024.png           # Icon preview at 1024px
+  Info.plist              # Bundle configuration
 ```
 
 ## Contributing
