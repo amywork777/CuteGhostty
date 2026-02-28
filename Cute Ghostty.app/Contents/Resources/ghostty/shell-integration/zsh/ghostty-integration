@@ -416,16 +416,24 @@ _entrypoint
 
 # 👻🎀 Cute Ghostty greeting
 _cute_ghostty_greetings=(
-    "👻🎀 welcome back, cutie!"
-    "👻🎀 let's make something lovely~"
-    "👻🎀 you're doing amazing sweetie"
-    "👻🎀 cozy terminal, cozy vibes ✨"
-    "👻🎀 sprinkle some magic today~"
-    "👻🎀 a fresh tab, a fresh start 🌸"
-    "👻🎀 hey gorgeous, let's code!"
-    "👻🎀 pastel dreams loading... ✨"
-    "👻🎀 cute ghostty says hi~ 🩷"
-    "👻🎀 manifest great code energy 🌷"
+    '₊˚⊹♡ 👻🎀 welcome back, cutie~ ♡⊹˚₊'
+    $'─── ⋆⋅☆⋅⋆ ──\n  👻🎀 let'\''s make something lovely~\n─── ⋆⋅☆⋅⋆ ──'
+    $'˚ ༘♡ ⋆｡˚ 👻🎀 you'\''re doing amazing sweetie ˚｡⋆ ♡˚ ༘'
+    '✧˖°.⊹ 👻🎀 cozy terminal, cozy vibes ⊹.°˖✧'
+    $'⋆ ˚｡⋆୨♡୧⋆ ˚｡⋆\n👻🎀 sprinkle some magic today~\n⋆ ˚｡⋆୨♡୧⋆ ˚｡⋆'
+    '🌸⟡˖ 👻🎀 a fresh tab, a fresh start~ ˖⟡🌸'
+    $'   ／l\n  (ﾟ､ ｡ ７\n\u3000 l、 ~ヽ\n\u3000 じしf_,)ノ\n👻🎀 hey gorgeous, let'\''s code!'
+    '꒰ა♡໒꒱ 👻🎀 pastel dreams loading... ✨'
+    $'  ♡  ∩∩\n ♡ ( ˘ ᵕ ˘ )\n━━━━━━━━━━━━━\n👻🎀 cute ghostty says hi~ 🩷'
+    '⁺‧₊˚♡˚₊‧⁺ 👻🎀 manifest great code energy 🌷 ⁺‧₊˚♡˚₊‧⁺'
+    $'┊  ┊  ┊  ┊\n┊  ┊  ┊  ♡\n┊  ┊  ✧\n┊  ♡\n✧\n👻🎀 sending sparkles your way~ ✨'
+    $'˖⁺.꒷꒦♡꒷꒦.⁺˖\n 👻🎀 you make the terminal cuter~\n˖⁺.꒷꒦♡꒷꒦.⁺˖'
+    '♡₊˚ 🦋・₊✧ 👻🎀 flutter into something beautiful~ ✧₊・🦋 ˚₊♡'
+    $'  ∧,,,∧\n( ̳• · • ̳)\n/    づ♡\n👻🎀 here'\''s a heart for you~'
+    '☆.。.:* 👻🎀 starlight, star bright, code something cute tonight~ *:.。.☆'
+    '⋆｡°✩ 👻🎀 twinkle twinkle little code ✩°｡⋆'
+    $'♡ ̆̈ 👻🎀 soft vibes only today~ ̆̈♡'
+    $'─♡─━━━━━━━━━━━━─♡─\n  👻🎀 welcome to your happy place~\n─♡─━━━━━━━━━━━━─♡─'
 )
 if [[ -o interactive ]] && (( $+_ghostty_state )); then
     builtin echo "${_cute_ghostty_greetings[$((RANDOM % ${#_cute_ghostty_greetings[@]} + 1))]}"

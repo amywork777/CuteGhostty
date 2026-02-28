@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		q2U5QTkQIrY8A4RGL+BFbS8LYsI=
+		z8BdrfhGG/DJl7p1RgZZjH0QBwQ=
 		</data>
 		<key>Resources/ClipboardConfirmation.nib</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Resources/Ghostty.icns</key>
 		<data>
-		yMvMKhUcQG/lKNGwEgbUHRkHPD8=
+		xu68SsdIBcntZoCuRjKu8Gya+hY=
 		</data>
 		<key>Resources/MainMenu.nib</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Resources/Metadata.appintents/extract.actionsdata</key>
 		<data>
-		v1EEXfLWFWY/LRodQ5wDbkcpD+I=
+		gPFXy1ZY8qBvs5T7GqY0FFpHJlw=
 		</data>
 		<key>Resources/Metadata.appintents/version.json</key>
 		<data>
@@ -78,7 +78,7 @@
 		</data>
 		<key>Resources/ghostty/shell-integration/bash/ghostty.bash</key>
 		<data>
-		MeFXUW/6y/eCWL7ZTmjkyIEH204=
+		G1leVQSLv7gFDAWhqmljJQCyD4s=
 		</data>
 		<key>Resources/ghostty/shell-integration/elvish/lib/ghostty-integration.elv</key>
 		<data>
@@ -86,7 +86,7 @@
 		</data>
 		<key>Resources/ghostty/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish</key>
 		<data>
-		QdZIrNWYraXo0h9HsGPpOi0BbXc=
+		+YfxZOZHsObUfu/m1rVRnpUOo0M=
 		</data>
 		<key>Resources/ghostty/shell-integration/nushell/vendor/autoload/ghostty.nu</key>
 		<data>
@@ -98,7 +98,7 @@
 		</data>
 		<key>Resources/ghostty/shell-integration/zsh/ghostty-integration</key>
 		<data>
-		ZlPUp4V4bgy5uAzqYRVxdN8J+KE=
+		6SEE4gB3j4DvaKqguYZnq7WOnag=
 		</data>
 		<key>Resources/ghostty/themes/0x96f</key>
 		<data>
@@ -2128,10 +2128,10 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			QXobV+Yy+vOVDtZcRtA9kk4q0UA=
+			LYuJQaQiF6w4RBamAgSOCrnPXOs=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"417a1b57e632faf3950ed65c46d03d924e2ad140" or cdhash H"cfa3c218fd145276ca2db5a2c5c075ae519ae75f"</string>
+			<string>identifier "com.mitchellh.ghostty-dock-tile" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = JUBFND4JUY</string>
 		</dict>
 		<key>Resources/About.nib</key>
 		<dict>
@@ -2144,7 +2144,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9TpTdbv1UDWFb5cEhLv3IBk9SOHWDdbPzdw7j3tMgUc=
+			Nb18j4Rhk9M3WCyK61621izc4yz6Yx+1dkbfycVken0=
 			</data>
 		</dict>
 		<key>Resources/ClipboardConfirmation.nib</key>
@@ -2165,7 +2165,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			nl3sWdIy4FopJvBaAYSPXdaK4ewPrCPWDFsjSz3I9ug=
+			p/RvN/EPWIggdL+zLUqpgJM1RVcPgRlonrBQGzEZKmM=
 			</data>
 		</dict>
 		<key>Resources/MainMenu.nib</key>
@@ -2179,7 +2179,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			IiWxWcKJ4/wRfZ5qRFElzKfF7PazUwK7BTja80t6Uew=
+			UVCJMr7ZfXdXGXoFg+kJm7kGCI0egiE+Ewp8Ev11gXQ=
 			</data>
 		</dict>
 		<key>Resources/Metadata.appintents/version.json</key>
@@ -2263,7 +2263,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			VuFmdMQ+7jnLKzfGnjhnPya/uILfxp+VNElSjoXjAt0=
+			x9xDiMiLkPTo1Ccx/xej0BLIn8OZjtCuJwFgCmaTx+0=
 			</data>
 		</dict>
 		<key>Resources/ghostty/shell-integration/elvish/lib/ghostty-integration.elv</key>
@@ -2277,7 +2277,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			UvGQiLnwiNbhLYFpW0XJeyJEIuudsP5HlnwgspJZRW4=
+			MWV94xfq2IFnWNJwsk6nIoFkMsvNzWFbSVNWDm28a28=
 			</data>
 		</dict>
 		<key>Resources/ghostty/shell-integration/nushell/vendor/autoload/ghostty.nu</key>
@@ -2298,7 +2298,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9PmoY0/toPjVQfjglnUL4lT9VmsNJVnjYj0ZNoaY938=
+			L2sZrrs4FSd6NnNkmEnnGCJlBwSkfTP7uEaVybfKx5M=
 			</data>
 		</dict>
 		<key>Resources/ghostty/themes/0x96f</key>

@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/amywork777/CuteGhostty/releases/download/v0.1/CuteGhostty.zip">Download</a> &bull;
+  <a href="https://github.com/amywork777/CuteGhostty/releases/download/v0.2/CuteGhostty.dmg">Download</a> &bull;
   <a href="https://cute-ghostty.vercel.app">Website</a> &bull;
   <a href="https://ghostty.org">Ghostty</a>
 </p>
@@ -25,10 +25,10 @@ Cute Ghostty is [Ghostty](https://ghostty.org) with a cute makeover. It's the ex
 
 ## Download
 
-Grab the latest build: **[CuteGhostty.zip](https://github.com/amywork777/CuteGhostty/releases/download/v0.1/CuteGhostty.zip)**
+Grab the latest build: **[CuteGhostty.dmg](https://github.com/amywork777/CuteGhostty/releases/download/v0.2/CuteGhostty.dmg)**
 
-1. Unzip and drag **Cute Ghostty.app** to your Applications folder
-2. On first launch, right-click and select "Open" to bypass Gatekeeper
+1. Open the DMG and drag **Cute Ghostty.app** to your Applications folder
+2. Launch and enjoy!
 
 **Requirements:** macOS 13.0+ &bull; Universal binary (Apple Silicon + Intel)
 
