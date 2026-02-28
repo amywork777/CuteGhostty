@@ -24,9 +24,9 @@
       --peach: #FFD4A8;
       --yellow: #FFF3B0;
       --blue-soft: #B8D4F0;
-      --bg: #1A1225;
-      --bg-card: #231832;
-      --bg-card-hover: #2D1F40;
+      --bg: #1C1025;
+      --bg-card: #271430;
+      --bg-card-hover: #33193E;
       --text: #F5EEF8;
       --text-dim: #B8A0CC;
       --text-dimmer: #7A6690;
@@ -59,7 +59,7 @@
     .star {
       position: absolute;
       border-radius: 50%;
-      background: white;
+      background: var(--pink-light);
       animation: twinkle var(--dur, 3s) ease-in-out infinite;
       animation-delay: var(--delay, 0s);
     }
@@ -97,8 +97,8 @@
       align-items: center;
       justify-content: space-between;
       backdrop-filter: blur(20px);
-      background: rgba(26, 18, 37, 0.8);
-      border-bottom: 1px solid rgba(200, 162, 240, 0.1);
+      background: rgba(28, 16, 37, 0.85);
+      border-bottom: 1px solid rgba(255, 178, 217, 0.15);
     }
 
     .nav-logo {
@@ -187,19 +187,21 @@
     .hero-glow-1 {
       top: -100px; left: 50%;
       transform: translateX(-70%);
-      background: var(--pink);
+      background: var(--pink-deep);
+      opacity: 0.3;
     }
 
     .hero-glow-2 {
       top: 50px; left: 50%;
       transform: translateX(-30%);
-      background: var(--lavender);
+      background: var(--pink);
+      opacity: 0.2;
     }
 
     .hero-glow-3 {
       bottom: -100px; left: 50%;
       transform: translateX(-50%);
-      background: var(--mint);
+      background: var(--lavender);
       opacity: 0.15;
     }
 
@@ -249,7 +251,7 @@
 
     .hero h1 .line2 {
       display: block;
-      background: linear-gradient(135deg, var(--lavender-light), var(--lavender));
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -303,14 +305,14 @@
     .btn-secondary {
       background: var(--bg-card);
       color: var(--text);
-      border: 2px solid rgba(200, 162, 240, 0.2);
+      border: 2px solid rgba(255, 178, 217, 0.2);
       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
 
     .btn-secondary:hover {
       transform: translateY(-3px);
-      border-color: var(--lavender);
-      box-shadow: 0 8px 30px var(--glow-lavender);
+      border-color: var(--pink);
+      box-shadow: 0 8px 30px var(--glow-pink);
     }
 
     .btn-icon { font-size: 20px; }
@@ -327,12 +329,12 @@
     .terminal-window {
       background: var(--bg-card);
       border-radius: 20px;
-      border: 1.5px solid rgba(200, 162, 240, 0.15);
+      border: 1.5px solid rgba(255, 178, 217, 0.2);
       overflow: hidden;
       box-shadow:
         0 30px 80px rgba(0,0,0,0.4),
-        0 0 60px var(--glow-lavender),
-        inset 0 1px 0 rgba(255,255,255,0.05);
+        0 0 60px var(--glow-pink),
+        inset 0 1px 0 rgba(255,178,217,0.08);
     }
 
     .terminal-bar {
@@ -340,8 +342,8 @@
       align-items: center;
       gap: 8px;
       padding: 14px 18px;
-      background: rgba(255,255,255,0.03);
-      border-bottom: 1px solid rgba(200, 162, 240, 0.08);
+      background: rgba(255, 178, 217, 0.04);
+      border-bottom: 1px solid rgba(255, 178, 217, 0.1);
     }
 
     .terminal-dot {
@@ -419,9 +421,9 @@
       color: var(--pink);
       margin-bottom: 12px;
       padding: 6px 16px;
-      background: rgba(255, 178, 217, 0.1);
+      background: rgba(255, 178, 217, 0.15);
       border-radius: 100px;
-      border: 1px solid rgba(255, 178, 217, 0.15);
+      border: 1px solid rgba(255, 178, 217, 0.25);
     }
 
     .section-title {
@@ -449,7 +451,7 @@
 
     .feature-card {
       background: var(--bg-card);
-      border: 1.5px solid rgba(200, 162, 240, 0.1);
+      border: 1.5px solid rgba(255, 178, 217, 0.12);
       border-radius: 20px;
       padding: 32px;
       transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
@@ -517,7 +519,7 @@
 
     .install-step {
       background: var(--bg-card);
-      border: 1.5px solid rgba(200, 162, 240, 0.1);
+      border: 1.5px solid rgba(255, 178, 217, 0.12);
       border-radius: 20px;
       padding: 32px 28px;
       position: relative;
@@ -578,7 +580,7 @@
       gap: 10px;
       padding: 14px 24px;
       background: var(--bg-card);
-      border: 1.5px solid rgba(200, 162, 240, 0.1);
+      border: 1.5px solid rgba(255, 178, 217, 0.15);
       border-radius: 16px;
       font-weight: 600;
       font-size: 15px;
@@ -595,8 +597,8 @@
     .cta-box {
       max-width: 600px;
       margin: 0 auto;
-      background: linear-gradient(135deg, rgba(255, 133, 184, 0.08), rgba(200, 162, 240, 0.08));
-      border: 1.5px solid rgba(200, 162, 240, 0.15);
+      background: linear-gradient(135deg, rgba(255, 133, 184, 0.12), rgba(255, 178, 217, 0.06));
+      border: 1.5px solid rgba(255, 178, 217, 0.2);
       border-radius: 32px;
       padding: 64px 48px;
       position: relative;
@@ -640,7 +642,7 @@
       position: relative;
       z-index: 2;
       padding: 40px 24px;
-      border-top: 1px solid rgba(200, 162, 240, 0.08);
+      border-top: 1px solid rgba(255, 178, 217, 0.12);
       text-align: center;
     }
 
@@ -746,8 +748,8 @@
     .about-banner {
       max-width: 900px;
       margin: 0 auto;
-      background: linear-gradient(135deg, rgba(255, 133, 184, 0.06), rgba(200, 162, 240, 0.06), rgba(168, 230, 207, 0.06));
-      border: 1.5px solid rgba(200, 162, 240, 0.12);
+      background: linear-gradient(135deg, rgba(255, 133, 184, 0.1), rgba(255, 178, 217, 0.05), rgba(200, 162, 240, 0.04));
+      border: 1.5px solid rgba(255, 178, 217, 0.18);
       border-radius: 24px;
       padding: 48px;
       display: flex;
@@ -855,7 +857,17 @@
       padding: 20px 0;
       opacity: 0.5;
       letter-spacing: 12px;
+      color: var(--pink);
     }
+
+    /* ─── Pink scrollbar ─── */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--pink-deep); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--pink); }
+
+    /* ─── Pink text selection ─── */
+    ::selection { background: rgba(255, 133, 184, 0.3); color: white; }
 
     /* ─── Cute cursor trail ─── */
     .cursor-heart {
@@ -926,7 +938,7 @@
 
     /* ─── Gradient text for section titles ─── */
     .section-title {
-      background: linear-gradient(135deg, var(--text), var(--pink-light));
+      background: linear-gradient(135deg, var(--pink-light), var(--pink));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
