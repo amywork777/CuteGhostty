@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cute Ghostty - The Cutest Terminal Emulator</title>
+  <meta name="description" content="Cute Ghostty is a cute customized build of Ghostty, the fast and feature-rich terminal emulator for macOS.">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #FFB2D9;
+      --pink-deep: #FF85B8;
+      --pink-light: #FFD6EB;
+      --lavender: #C8A2F0;
+      --lavender-deep: #A872E0;
+      --lavender-light: #E8D5FF;
+      --mint: #A8E6CF;
+      --mint-deep: #6DD5A8;
+      --mint-light: #D4F5E4;
+      --peach: #FFD4A8;
+      --yellow: #FFF3B0;
+      --blue-soft: #B8D4F0;
+      --bg: #1A1225;
+      --bg-card: #231832;
+      --bg-card-hover: #2D1F40;
+      --text: #F5EEF8;
+      --text-dim: #B8A0CC;
+      --text-dimmer: #7A6690;
+      --glow-pink: rgba(255, 178, 217, 0.3);
+      --glow-lavender: rgba(200, 162, 240, 0.3);
+      --glow-mint: rgba(168, 230, 207, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─── Starfield Background ─── */
+    .starfield {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.4); }
+    }
+
+    /* ─── Floating Sparkles ─── */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      animation: sparkle-float var(--dur, 6s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+      font-size: var(--size, 16px);
+      opacity: 0.6;
+    }
+
+    @keyframes sparkle-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; }
+      25% { transform: translateY(-15px) rotate(20deg); opacity: 0.8; }
+      50% { transform: translateY(-5px) rotate(-10deg); opacity: 0.5; }
+      75% { transform: translateY(-20px) rotate(15deg); opacity: 0.9; }
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(20px);
+      background: rgba(26, 18, 37, 0.8);
+      border-bottom: 1px solid rgba(200, 162, 240, 0.1);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-ghost {
+      font-size: 28px;
+      animation: ghost-bob 2s ease-in-out infinite;
+    }
+
+    @keyframes ghost-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .nav-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--pink); }
+
+    .nav-download {
+      background: linear-gradient(135deg, var(--pink-deep), var(--lavender));
+      color: white !important;
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-weight: 700 !important;
+      transition: transform 0.3s, box-shadow 0.3s !important;
+      box-shadow: 0 4px 20px var(--glow-pink);
+    }
+
+    .nav-download:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 30px var(--glow-pink) !important;
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .hero-glow-1 {
+      top: -100px; left: 50%;
+      transform: translateX(-70%);
+      background: var(--pink);
+    }
+
+    .hero-glow-2 {
+      top: 50px; left: 50%;
+      transform: translateX(-30%);
+      background: var(--lavender);
+    }
+
+    .hero-glow-3 {
+      bottom: -100px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--mint);
+      opacity: 0.15;
+    }
+
+    .hero-ghost-art {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 32px;
+      animation: hero-float 4s ease-in-out infinite;
+    }
+
+    @keyframes hero-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+
+    .ghost-svg {
+      width: 180px;
+      height: 200px;
+      filter: drop-shadow(0 20px 60px var(--glow-pink));
+    }
+
+    .hero-icon {
+      width: 180px;
+      height: 180px;
+      border-radius: 36px;
+      filter: drop-shadow(0 20px 60px var(--glow-pink)) drop-shadow(0 0 40px rgba(255, 133, 184, 0.2));
+    }
+
+    .hero h1 {
+      position: relative;
+      z-index: 2;
+      font-family: 'Nunito', sans-serif;
+      font-size: clamp(48px, 8vw, 88px);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 .line1 {
+      display: block;
+      background: linear-gradient(135deg, var(--pink-light), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero h1 .line2 {
+      display: block;
+      background: linear-gradient(135deg, var(--lavender-light), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(17px, 2.5vw, 22px);
+      color: var(--text-dim);
+      max-width: 560px;
+      margin-bottom: 40px;
+      font-weight: 500;
+    }
+
+    .hero-buttons {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 100px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      text-decoration: none;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink-deep), var(--lavender));
+      color: white;
+      box-shadow: 0 8px 40px var(--glow-pink);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 50px var(--glow-pink);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text);
+      border: 2px solid rgba(200, 162, 240, 0.2);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      border-color: var(--lavender);
+      box-shadow: 0 8px 30px var(--glow-lavender);
+    }
+
+    .btn-icon { font-size: 20px; }
+
+    /* ─── Cute ASCII Terminal ─── */
+    .terminal-preview {
+      position: relative;
+      z-index: 2;
+      margin-top: 60px;
+      width: 100%;
+      max-width: 880px;
+    }
+
+    .terminal-window {
+      background: var(--bg-card);
+      border-radius: 20px;
+      border: 1.5px solid rgba(200, 162, 240, 0.15);
+      overflow: hidden;
+      box-shadow:
+        0 30px 80px rgba(0,0,0,0.4),
+        0 0 60px var(--glow-lavender),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(200, 162, 240, 0.08);
+    }
+
+    .terminal-dot {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot:nth-child(1) { background: var(--pink); }
+    .terminal-dot:nth-child(2) { background: var(--yellow); }
+    .terminal-dot:nth-child(3) { background: var(--mint); }
+
+    .terminal-title {
+      flex: 1;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-dimmer);
+      font-weight: 600;
+    }
+
+    .terminal-body {
+      padding: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      min-height: 200px;
+      overflow-x: auto;
+    }
+
+    .term-prompt {
+      color: var(--pink);
+      font-weight: 600;
+    }
+
+    .term-cmd { color: var(--mint); }
+    .term-flag { color: var(--lavender); }
+    .term-string { color: var(--peach); }
+    .term-comment { color: var(--text-dimmer); }
+    .term-output { color: var(--text-dim); }
+
+    .term-cursor {
+      display: inline-block;
+      width: 9px;
+      height: 18px;
+      background: var(--pink);
+      border-radius: 2px;
+      animation: blink 1s step-end infinite;
+      vertical-align: text-bottom;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ─── Section Styles ─── */
+    section {
+      position: relative;
+      z-index: 2;
+      padding: 100px 24px;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--pink);
+      margin-bottom: 12px;
+      padding: 6px 16px;
+      background: rgba(255, 178, 217, 0.1);
+      border-radius: 100px;
+      border: 1px solid rgba(255, 178, 217, 0.15);
+    }
+
+    .section-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: clamp(32px, 5vw, 48px);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .section-desc {
+      color: var(--text-dim);
+      font-size: 18px;
+      max-width: 600px;
+      margin-bottom: 48px;
+      font-weight: 500;
+    }
+
+    /* ─── Features Grid ─── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1.5px solid rgba(200, 162, 240, 0.1);
+      border-radius: 20px;
+      padding: 32px;
+      transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--pink), var(--lavender), var(--mint));
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(200, 162, 240, 0.25);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      font-size: 36px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feature-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      color: var(--text-dim);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* ─── Install Section ─── */
+    .install-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      counter-reset: step;
+    }
+
+    .install-step {
+      background: var(--bg-card);
+      border: 1.5px solid rgba(200, 162, 240, 0.1);
+      border-radius: 20px;
+      padding: 32px 28px;
+      position: relative;
+      counter-increment: step;
+      transition: transform 0.3s;
+    }
+
+    .install-step:hover { transform: translateY(-4px); }
+
+    .step-number {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 48px;
+      background: linear-gradient(135deg, var(--pink), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .step-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      color: var(--text-dim);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .step-code {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 14px;
+      background: rgba(168, 230, 207, 0.1);
+      border: 1px solid rgba(168, 230, 207, 0.15);
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--mint);
+    }
+
+    /* ─── Requirements ─── */
+    .req-badges {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .req-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      background: var(--bg-card);
+      border: 1.5px solid rgba(200, 162, 240, 0.1);
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .req-badge-icon { font-size: 24px; }
+
+    /* ─── CTA Section ─── */
+    .cta-section {
+      text-align: center;
+      padding: 120px 24px;
+    }
+
+    .cta-box {
+      max-width: 600px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255, 133, 184, 0.08), rgba(200, 162, 240, 0.08));
+      border: 1.5px solid rgba(200, 162, 240, 0.15);
+      border-radius: 32px;
+      padding: 64px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 300px; height: 300px;
+      background: var(--pink);
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.1;
+    }
+
+    .cta-ghost {
+      font-size: 56px;
+      margin-bottom: 20px;
+      display: block;
+      animation: hero-float 3s ease-in-out infinite;
+    }
+
+    .cta-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: clamp(28px, 4vw, 40px);
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      color: var(--text-dim);
+      font-size: 17px;
+      margin-bottom: 32px;
+      font-weight: 500;
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      position: relative;
+      z-index: 2;
+      padding: 40px 24px;
+      border-top: 1px solid rgba(200, 162, 240, 0.08);
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-dimmer);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--pink); }
+
+    .footer-copy {
+      color: var(--text-dimmer);
+      font-size: 13px;
+    }
+
+    .footer-copy a {
+      color: var(--lavender);
+      text-decoration: none;
+    }
+
+    /* ─── Scroll Animations ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── ASCII Ghost Art ─── */
+    .ascii-ghost {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      line-height: 1.05;
+      letter-spacing: 0px;
+      color: var(--pink);
+      white-space: pre;
+      text-align: left;
+      margin-bottom: 16px;
+      text-shadow: 0 0 20px var(--glow-pink);
+    }
+
+    .braille-ghost-section {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px 24px 60px;
+    }
+
+    .braille-ghost-art {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      line-height: 1.05;
+      letter-spacing: 0px;
+      color: var(--pink);
+      white-space: pre;
+      display: inline-block;
+      text-shadow: 0 0 30px var(--glow-pink);
+      opacity: 0.7;
+      animation: ghost-breathe 4s ease-in-out infinite;
+    }
+
+    @keyframes ghost-breathe {
+      0%, 100% { opacity: 0.5; transform: translateY(0); }
+      50% { opacity: 0.8; transform: translateY(-6px); }
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      nav { padding: 12px 16px; }
+      .nav-links { gap: 16px; }
+      .nav-links a:not(.nav-download) { display: none; }
+      .terminal-preview { margin-top: 40px; }
+      .terminal-body { padding: 16px; font-size: 12px; }
+      section { padding: 60px 16px; }
+      .cta-box { padding: 40px 24px; }
+      .hero { padding: 100px 16px 60px; }
+    }
+
+    /* ─── About Banner ─── */
+    .about-banner {
+      max-width: 900px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, rgba(255, 133, 184, 0.06), rgba(200, 162, 240, 0.06), rgba(168, 230, 207, 0.06));
+      border: 1.5px solid rgba(200, 162, 240, 0.12);
+      border-radius: 24px;
+      padding: 48px;
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-icon-wrap {
+      flex-shrink: 0;
+    }
+
+    .about-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      filter: drop-shadow(0 12px 30px var(--glow-pink));
+    }
+
+    .about-content { flex: 1; }
+
+    .about-content h2 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .about-content p {
+      color: var(--text-dim);
+      font-size: 16px;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    .about-content p:last-of-type { margin-bottom: 20px; }
+
+    .about-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .about-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: rgba(200, 162, 240, 0.1);
+      border: 1px solid rgba(200, 162, 240, 0.15);
+      border-radius: 100px;
+      color: var(--lavender);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .about-link:hover {
+      background: rgba(200, 162, 240, 0.18);
+      border-color: var(--lavender);
+    }
+
+    .about-link-gh {
+      color: var(--mint);
+      background: rgba(168, 230, 207, 0.1);
+      border-color: rgba(168, 230, 207, 0.15);
+    }
+
+    .about-link-gh:hover {
+      background: rgba(168, 230, 207, 0.18);
+      border-color: var(--mint);
+    }
+
+    .oss-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      padding: 5px 14px;
+      background: rgba(168, 230, 207, 0.1);
+      border: 1px solid rgba(168, 230, 207, 0.15);
+      border-radius: 100px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--mint);
+    }
+
+    @media (max-width: 768px) {
+      .about-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 32px 24px;
+        gap: 24px;
+      }
+      .about-links { justify-content: center; }
+    }
+
+    /* ─── Cute decorative divider ─── */
+    .cute-divider {
+      text-align: center;
+      font-size: 24px;
+      padding: 20px 0;
+      opacity: 0.5;
+      letter-spacing: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Starfield -->
+  <div class="starfield" id="starfield"></div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="icon.png" alt="Cute Ghostty" style="width: 32px; height: 32px; border-radius: 8px;">
+      <span class="nav-title">Cute Ghostty</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="https://github.com/amywork777/CuteGhostty" target="_blank">GitHub</a></li>
+      <li><a href="CuteGhostty.dmg" download class="nav-download">Download</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-glow hero-glow-3"></div>
+
+    <div class="hero-ghost-art">
+      <img src="icon.png" alt="Cute Ghostty" class="hero-icon">
+    </div>
+
+    <h1>
+      <span class="line1">Cute Ghostty</span>
+      <span class="line2">for your terminal</span>
+    </h1>
+    <p class="hero-sub">
+      A cute customized build of Ghostty &mdash; fast, GPU-accelerated, and adorable. Your terminal deserves to be pretty. ˚₊✩‧₊
+    </p>
+
+    <div class="hero-buttons">
+      <a href="CuteGhostty.dmg" download class="btn btn-primary">
+        <span class="btn-icon">🎀</span>
+        Download for macOS
+      </a>
+      <a href="https://github.com/amywork777/CuteGhostty" class="btn btn-secondary" target="_blank">
+        <span class="btn-icon">🎀</span>
+        Star on GitHub
+      </a>
+    </div>
+
+    <!-- Terminal Preview -->
+    <div class="terminal-preview reveal">
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <div class="terminal-dot"></div>
+          <div class="terminal-dot"></div>
+          <div class="terminal-dot"></div>
+          <div class="terminal-title">♡ cute ghostty ~ zsh ♡</div>
+        </div>
+        <div class="terminal-body">
+          <div><span class="term-prompt">~</span> <span class="term-cmd">neofetch</span></div>
+          <div class="term-output" style="margin-top: 8px;">
+<pre class="ascii-ghost">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⡾⠿⠿⠿⠟⠛⠿⠿⢷⣦⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⡿⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⣷⣄⠀⠀⠀⠀⠀⣠⣄⠀⢀⡀⠀  <span class="term-output">amy@macbook</span>
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣷⡀⠀⠀⣾⡟⠉⢻⠟⣿⣆  <span class="term-flag">os</span>    <span class="term-string">macOS Ventura</span>
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣷⡀⠀⠹⣿⣦⣀⣴⣿⠇  <span class="term-flag">term</span>  <span class="term-string">Cute Ghostty v0.1</span>
+⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⠇⠀⠀⢀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⡇⠀⠀⠀⠉⠛⠉⠀⠀  <span class="term-flag">shell</span> <span class="term-string">zsh 5.9</span>
+⠀⠀⠀⠀⠀⠀⠀⠀⣾⡟⠀⠀⠀⣿⣿⣷⠀⠀⠀⠀⠀⣾⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣷⠀⠀⠀⠀⠀⠀⠀⠀  <span class="term-flag">theme</span> <span class="term-string">pastel dreams ♡</span>
+⠀⠀⠀⠀⠀⠀⠀⢠⣿⡇⠠⡄⠀⠩⠉⡁⠐⠿⠾⠃⠀⠙⠛⠃⠐⢤⡀⠀⠀⠀⠀⠀⠀⠈⣿⡆⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⠻⡃⠋⠂⣀⣧⣀⡀⠀⠀⢀⣀⡓⠠⠘⠀⣷⠀⠀⠀⠀⠀⠀⠀⢹⣿⡀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠀⣴⠞⠋⠉⠙⠻⡷⠛⠋⢙⠻⣷⣄⡐⠁⠀⠀⠀⠀⠀⠀⠀⠀⢿⣷⡀⠀⠀⠀⠀⠀  <span class="term-string">₊✩‧₊˚ ୨ৎ ˚₊✩‧₊</span>
+⠀⣀⣰⠿⢿⡆⠀⢻⣿⠀⠀⠻⣷⣄⠀⠀⠀⠀⠀⠀⠘⢌⣴⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⣄⠀⠀⠀⠀
+⠸⣿⣌⣡⡾⠃⠀⢸⣿⢀⡀⠀⠈⠛⢿⣦⠀⠀⠀⠀⢰⡿⠁⠀⠀⣀⡴⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⡆⠀⠀⠀
+⠀⠈⠉⠙⠁⠀⠀⠈⣿⣏⢿⣦⣄⠀⣸⡿⠀⠀⠀⠀⠸⣿⣦⣴⠾⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠹⣿⡄⠈⠙⠛⠛⢷⣄⡀⢀⣤⣾⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⠂⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣷⡄⠀⠀⠀⠀⠙⠻⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣴⡿⠏⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠛⠛⠋⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⢷⣦⣤⣤⣶⣶⢶⣦⣤⣀⣀⣤⣴⣾⠿⠿⢶⡶⠿⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</pre>
+          </div>
+          <div style="margin-top: 4px;"><span class="term-prompt">~</span> <span class="term-cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cute-divider">₊✩‧₊˚ ౨ৎ ˚₊✩‧₊</div>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-label">Features</span>
+        <h2 class="section-title">Everything you love,<br>now extra cute</h2>
+        <p class="section-desc">Built on Ghostty's blazing-fast foundation with a cute aesthetic that makes your terminal feel like home.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <span class="feature-icon">🎀</span>
+          <h3 class="feature-title">Kawaii Icon</h3>
+          <p class="feature-desc">A custom-designed adorable ghost icon that looks perfect in your dock. Pink, pastel, and unmistakably cute &mdash; your terminal has never looked this good.</p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">🎀</span>
+          <h3 class="feature-title">Pastel Colour Scheme</h3>
+          <p class="feature-desc">Pre-configured with a dreamy pastel palette &mdash; soft pinks, lavenders, and mints. Beautiful out of the box with no config files needed.</p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">🎀</span>
+          <h3 class="feature-title">Cute Aesthetic Touches</h3>
+          <p class="feature-desc">Custom asset catalog with cute styling throughout. Every detail has been thoughtfully redesigned to bring joy to your daily terminal workflow.</p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">🎀</span>
+          <h3 class="feature-title">100% Ghostty Under the Hood</h3>
+          <p class="feature-desc">Same blazing-fast GPU-accelerated rendering, native macOS UI, splits, tabs, and every feature you love. We only changed the look, not the power.</p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">🎀</span>
+          <h3 class="feature-title">Drop-in Replacement</h3>
+          <p class="feature-desc">Runs alongside or instead of regular Ghostty with its own bundle identity. Your existing Ghostty config and shell setup work perfectly.</p>
+        </div>
+        <div class="feature-card reveal">
+          <span class="feature-icon">🎀</span>
+          <h3 class="feature-title">Open Source</h3>
+          <p class="feature-desc">Free and open source. Swap in your own icon, tweak the colours, or build it yourself from any Ghostty install. Make it yours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cute-divider">₊✩‧₊˚ ౨ৎ ˚₊✩‧₊</div>
+
+  <!-- About / Open Source -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-banner reveal">
+        <div class="about-icon-wrap">
+          <img src="icon.png" alt="Cute Ghostty Icon" class="about-icon">
+        </div>
+        <div class="about-content">
+          <span class="oss-badge">Open Source</span>
+          <h2>Built on Ghostty</h2>
+          <p>
+            Cute Ghostty is <strong>the same Ghostty you already know and love</strong> &mdash; just with cute pastel colours, adorable emojis, and a kawaii icon. Under the hood it's 100% Ghostty: the same blazing-fast GPU-accelerated terminal, the same features, the same reliability.
+          </p>
+          <p>
+            <a href="https://ghostty.org" target="_blank" style="color: var(--pink); text-decoration: none; font-weight: 700;">Ghostty</a> is an incredible open-source terminal emulator created by Mitchell Hashimoto. We just made it cuter. The full source is on GitHub &mdash; contributions, issues, and stars are all welcome!
+          </p>
+          <div class="about-links">
+            <a href="https://github.com/amywork777/CuteGhostty" target="_blank" class="about-link about-link-gh">
+              GitHub Repo
+            </a>
+            <a href="https://ghostty.org" target="_blank" class="about-link">
+              Ghostty.org
+            </a>
+            <a href="https://github.com/ghostty-org/ghostty" target="_blank" class="about-link">
+              Ghostty Source
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cute-divider">₊✩‧₊˚ ౨ৎ ˚₊✩‧₊</div>
+
+  <!-- Install -->
+  <section id="install">
+    <div class="section-inner">
+      <div class="reveal">
+        <span class="section-label">Install</span>
+        <h2 class="section-title">Up and running in seconds</h2>
+        <p class="section-desc">Getting Cute Ghostty on your Mac is as easy as downloading, unzipping, and falling in love.</p>
+      </div>
+      <div class="install-steps">
+        <div class="install-step reveal">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Download</h3>
+          <p class="step-desc">Click the download button above. You'll get a disk image file.</p>
+          <span class="step-code">CuteGhostty.dmg</span>
+        </div>
+        <div class="install-step reveal">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Unzip &amp; Move</h3>
+          <p class="step-desc">Open the DMG and drag Cute Ghostty into the Applications folder.</p>
+          <span class="step-code">Drag &rarr; Applications</span>
+        </div>
+        <div class="install-step reveal">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Launch</h3>
+          <p class="step-desc">Double-click to launch and enjoy your new cute terminal. It just works!</p>
+          <span class="step-code">open -a "Cute Ghostty"</span>
+        </div>
+      </div>
+
+      <div class="reveal" style="margin-top: 48px;">
+        <h3 class="feature-title" style="margin-bottom: 8px;">Requirements</h3>
+        <div class="req-badges">
+          <div class="req-badge">
+            <span class="req-badge-icon">🎀</span>
+            <span>macOS 13.0+ (Ventura)</span>
+          </div>
+          <div class="req-badge">
+            <span class="req-badge-icon">🎀</span>
+            <span>Apple Silicon (arm64)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cute-divider">₊✩‧₊˚ ౨ৎ ˚₊✩‧₊</div>
+
+  <!-- Braille Ghost Art -->
+  <div class="braille-ghost-section">
+<pre class="braille-ghost-art">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⡾⠿⠿⠿⠟⠛⠿⠿⢷⣦⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣴⡿⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⣷⣄⠀⠀⠀⠀⠀⣠⣄⠀⢀⡀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣷⡀⠀⠀⣾⡟⠉⢻⠟⣿⣆
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣷⡀⠀⠹⣿⣦⣀⣴⣿⠇
+⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⠇⠀⠀⢀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⡇⠀⠀⠀⠉⠛⠉⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣾⡟⠀⠀⠀⣿⣿⣷⠀⠀⠀⠀⠀⣾⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣷⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢠⣿⡇⠠⡄⠀⠩⠉⡁⠐⠿⠾⠃⠀⠙⠛⠃⠐⢤⡀⠀⠀⠀⠀⠀⠀⠈⣿⡆⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⠻⡃⠋⠂⣀⣧⣀⡀⠀⠀⢀⣀⡓⠠⠘⠀⣷⠀⠀⠀⠀⠀⠀⠀⢹⣿⡀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠀⣴⠞⠋⠉⠙⠻⡷⠛⠋⢙⠻⣷⣄⡐⠁⠀⠀⠀⠀⠀⠀⠀⠀⢿⣷⡀⠀⠀⠀⠀⠀
+⠀⣀⣰⠿⢿⡆⠀⢻⣿⠀⠀⠻⣷⣄⠀⠀⠀⠀⠀⠀⠘⢌⣴⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⣄⠀⠀⠀⠀
+⠸⣿⣌⣡⡾⠃⠀⢸⣿⢀⡀⠀⠈⠛⢿⣦⠀⠀⠀⠀⢰⡿⠁⠀⠀⣀⡴⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⡆⠀⠀⠀
+⠀⠈⠉⠙⠁⠀⠀⠈⣿⣏⢿⣦⣄⠀⣸⡿⠀⠀⠀⠀⠸⣿⣦⣴⠾⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠹⣿⡄⠈⠙⠛⠛⢷⣄⡀⢀⣤⣾⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⣿⠂⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣷⡄⠀⠀⠀⠀⠙⠻⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣴⡿⠏⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡿⠛⠛⠋⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⢷⣦⣤⣤⣶⣶⢶⣦⣤⣀⣀⣤⣴⣾⠿⠿⢶⡶⠿⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</pre>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-box reveal">
+      <span class="cta-ghost">
+        <img src="icon.png" alt="Cute Ghostty" style="width: 64px; height: 64px; border-radius: 14px;">
+      </span>
+      <h2 class="cta-title">Ready to get cute? ♡⠂⠂୨୧</h2>
+      <p class="cta-desc">Download Cute Ghostty and make your terminal the prettiest one on the block. ˚⋆｡</p>
+      <a href="CuteGhostty.dmg" download class="btn btn-primary">
+        <span class="btn-icon">🎀</span>
+        Download v0.2
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <ul class="footer-links">
+        <li><a href="https://github.com/amywork777/CuteGhostty" target="_blank">GitHub</a></li>
+        <li><a href="CuteGhostty.dmg" download target="_blank">Download</a></li>
+        <li><a href="https://ghostty.org" target="_blank">Ghostty</a></li>
+      </ul>
+      <p class="footer-copy">
+        ♡ Built with love on <a href="https://ghostty.org" target="_blank">Ghostty</a> ♡ MIT License ♡ ˚₊✩‧₊
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Starfield ───
+    (function() {
+      const field = document.getElementById('starfield');
+      for (let i = 0; i < 80; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 2.5 + 1;
+        star.style.cssText = `
+          left: ${Math.random() * 100}%;
+          top: ${Math.random() * 100}%;
+          width: ${size}px;
+          height: ${size}px;
+          --dur: ${Math.random() * 4 + 2}s;
+          --delay: ${Math.random() * 5}s;
+        `;
+        field.appendChild(star);
+      }
+    })();
+
+    // ─── Floating Sparkles ───
+    (function() {
+      const sparkles = ['✩', '♡', '˚', '⋆', '୨ৎ', '✧', '₊', '꩜'];
+      const hero = document.querySelector('.hero');
+      for (let i = 0; i < 15; i++) {
+        const el = document.createElement('div');
+        el.className = 'sparkle';
+        el.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+        el.style.cssText = `
+          left: ${Math.random() * 100}%;
+          top: ${Math.random() * 100}%;
+          --dur: ${Math.random() * 5 + 4}s;
+          --delay: ${Math.random() * 4}s;
+          --size: ${Math.random() * 14 + 10}px;
+          color: ${['#FFB2D9','#C8A2F0','#A8E6CF','#FFF3B0','#FFD4A8'][Math.floor(Math.random()*5)]};
+        `;
+        hero.appendChild(el);
+      }
+    })();
+
+    // ─── Scroll Reveal ───
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // ─── Typed Terminal Effect ───
+    // The terminal content is static for simplicity, but the cursor blinks
+  </script>
+</body>
+</html>
