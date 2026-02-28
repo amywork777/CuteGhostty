@@ -72,6 +72,22 @@
 		<data>
 		3LVYvQT2s576QyoB+UoahfWNe2U=
 		</data>
+		<key>Resources/ghostty/doc/ghostty.1.html</key>
+		<data>
+		PHAemNF2xSFbAb60PQ8Hxj7+hyM=
+		</data>
+		<key>Resources/ghostty/doc/ghostty.1.md</key>
+		<data>
+		RQKl66KMSmV8SEdorJWhJPuMwHM=
+		</data>
+		<key>Resources/ghostty/doc/ghostty.5.html</key>
+		<data>
+		PvSBbGPF+9/PZu5z+VmUfWZRW4o=
+		</data>
+		<key>Resources/ghostty/doc/ghostty.5.md</key>
+		<data>
+		sDR+5kgn5wsZRSrxet5M7cugczQ=
+		</data>
 		<key>Resources/ghostty/shell-integration/bash/bash-preexec.sh</key>
 		<data>
 		nAM4ErGUtaz+zuBbtZ1MAO+tdGY=
@@ -355,6 +371,14 @@
 		<key>Resources/ghostty/themes/Builtin Pastel Dark</key>
 		<data>
 		25kmlPxzNqWD46eoAoJQOvX9020=
+		</data>
+		<key>Resources/ghostty/themes/Builtin Solarized Dark</key>
+		<data>
+		SX2hdOby86dQPIOjYz9ZUuM2n74=
+		</data>
+		<key>Resources/ghostty/themes/Builtin Solarized Light</key>
+		<data>
+		WAaEpc8ahE7NHaO5MW7y5i5SDic=
 		</data>
 		<key>Resources/ghostty/themes/Builtin Tango Dark</key>
 		<data>
@@ -2060,6 +2084,14 @@
 		<data>
 		6OdymmI8fHhunUP3/BxepwFvPY4=
 		</data>
+		<key>Resources/man/man1/ghostty.1</key>
+		<data>
+		q5FNqhiWYFf7plD/PwTFVsy4FVc=
+		</data>
+		<key>Resources/man/man5/ghostty.5</key>
+		<data>
+		3JsZ0EkdFkjiydm2ZmNa64sSgXU=
+		</data>
 		<key>Resources/nvim/site/compiler/ghostty.vim</key>
 		<data>
 		mQYHo1gul/e7X22DCXZvOa2Hmc8=
@@ -2119,7 +2151,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			Vgp6nKcmGsxBCWnzQ+o2U62xgXg=
+			MtRFvkJBTnc355MLuKCyBGOdvCQ=
 			</data>
 			<key>requirement</key>
 			<string>identifier "org.sparkle-project.Sparkle" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = JUBFND4JUY</string>
@@ -2250,6 +2282,34 @@
 			<key>hash2</key>
 			<data>
 			u1U0RG6smIsApKeUSnaTowMutrmCipOpd/E0USmBj74=
+			</data>
+		</dict>
+		<key>Resources/ghostty/doc/ghostty.1.html</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			zrh6oIqF3+rp068G64ELO77C1fkODG40mjLvA15biU8=
+			</data>
+		</dict>
+		<key>Resources/ghostty/doc/ghostty.1.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			VX1CFSuhxFexyoZpwh759adtSl82BFmFAi/KanPlxOo=
+			</data>
+		</dict>
+		<key>Resources/ghostty/doc/ghostty.5.html</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			RfS+51xipr1YCOBrpbxGPUe2OzJe5Hkpi7LU3X9HO0U=
+			</data>
+		</dict>
+		<key>Resources/ghostty/doc/ghostty.5.md</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			evNIs6AolDvaNNTyS+f17PdYxdpq4rtATnObTTlVwaM=
 			</data>
 		</dict>
 		<key>Resources/ghostty/shell-integration/bash/bash-preexec.sh</key>
@@ -2747,6 +2807,20 @@
 			<key>hash2</key>
 			<data>
 			6QC9Ex11iq9whlOraB1atLbzEQFuk0qUStfKe7RWH0c=
+			</data>
+		</dict>
+		<key>Resources/ghostty/themes/Builtin Solarized Dark</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			nad60RJwGsVRAbq7u/23aVzGRh/+/p+mciT3+b7jjcs=
+			</data>
+		</dict>
+		<key>Resources/ghostty/themes/Builtin Solarized Light</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			WjdLJ3D3Sr67ZZPF/ewaGNEDIDV3VITTLYjL+vqc/qk=
 			</data>
 		</dict>
 		<key>Resources/ghostty/themes/Builtin Tango Dark</key>
@@ -5729,6 +5803,20 @@
 			<key>hash2</key>
 			<data>
 			vnppwTdt7fkq7xU9KgkBRzcyyHD9awHx23wShU0T5Ts=
+			</data>
+		</dict>
+		<key>Resources/man/man1/ghostty.1</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			GX2yOrTzQV+KdWm0hefXxrqE7WzUxbrcecWdOTQjtLU=
+			</data>
+		</dict>
+		<key>Resources/man/man5/ghostty.5</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ktBxwcIquP2qW5tdpnxbhg2KPA0QSD6jQqxVCgdtMfg=
 			</data>
 		</dict>
 		<key>Resources/nvim/site/compiler/ghostty.vim</key>
