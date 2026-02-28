@@ -462,23 +462,35 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--pink), var(--lavender), var(--mint));
+      background: linear-gradient(90deg, var(--card-accent, var(--pink)), var(--lavender));
       opacity: 0;
       transition: opacity 0.4s;
     }
 
     .feature-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(200, 162, 240, 0.25);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(255, 178, 217, 0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px var(--card-glow, var(--glow-pink));
     }
 
     .feature-card:hover::before { opacity: 1; }
 
+    .feature-card:nth-child(1) { --card-accent: var(--pink); --card-glow: var(--glow-pink); }
+    .feature-card:nth-child(2) { --card-accent: var(--lavender); --card-glow: var(--glow-lavender); }
+    .feature-card:nth-child(3) { --card-accent: var(--mint); --card-glow: var(--glow-mint); }
+    .feature-card:nth-child(4) { --card-accent: var(--peach); --card-glow: rgba(255, 212, 168, 0.3); }
+    .feature-card:nth-child(5) { --card-accent: var(--blue-soft); --card-glow: rgba(184, 212, 240, 0.3); }
+    .feature-card:nth-child(6) { --card-accent: var(--yellow); --card-glow: rgba(255, 243, 176, 0.3); }
+
     .feature-icon {
-      font-size: 36px;
+      font-size: 40px;
       margin-bottom: 16px;
       display: block;
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.15) rotate(-5deg);
     }
 
     .feature-title {
@@ -843,12 +855,123 @@
       opacity: 0.5;
       letter-spacing: 12px;
     }
+
+    /* ─── Cute cursor trail ─── */
+    .cursor-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 14px;
+      animation: cursor-fade 0.8s ease-out forwards;
+      color: var(--pink);
+    }
+
+    @keyframes cursor-fade {
+      0% { opacity: 0.8; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-30px) scale(0.3); }
+    }
+
+    /* ─── Button pulse glow ─── */
+    .btn-primary {
+      animation: btn-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes btn-glow {
+      0%, 100% { box-shadow: 0 8px 40px var(--glow-pink); }
+      50% { box-shadow: 0 8px 60px var(--glow-pink), 0 0 80px rgba(255, 133, 184, 0.15); }
+    }
+
+    .btn-primary:hover {
+      animation: none;
+    }
+
+    /* ─── Feature card shimmer ─── */
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 40%,
+        rgba(255, 178, 217, 0.03) 45%,
+        rgba(255, 178, 217, 0.06) 50%,
+        rgba(255, 178, 217, 0.03) 55%,
+        transparent 60%
+      );
+      transform: rotate(0deg);
+      transition: transform 0.6s;
+      pointer-events: none;
+    }
+
+    .feature-card:hover::after {
+      transform: rotate(180deg);
+    }
+
+    /* ─── Enhanced nav logo hover ─── */
+    .nav-logo:hover .nav-title {
+      text-shadow: 0 0 20px var(--glow-pink);
+    }
+
+    .nav-logo img {
+      transition: transform 0.3s;
+    }
+
+    .nav-logo:hover img {
+      transform: rotate(-10deg) scale(1.1);
+    }
+
+    /* ─── Gradient text for section titles ─── */
+    .section-title {
+      background: linear-gradient(135deg, var(--text), var(--pink-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── Enhanced install step hover ─── */
+    .install-step:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 178, 217, 0.25);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.2), 0 0 30px var(--glow-pink);
+    }
+
+    /* ─── Floating hearts throughout page ─── */
+    .floating-hearts {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -20px;
+      animation: float-up var(--dur, 12s) linear infinite;
+      animation-delay: var(--delay, 0s);
+      opacity: 0.12;
+      font-size: var(--size, 16px);
+    }
+
+    @keyframes float-up {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.12; }
+      90% { opacity: 0.12; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
 
   <!-- Starfield -->
   <div class="starfield" id="starfield"></div>
+
+  <!-- Floating Hearts -->
+  <div class="floating-hearts" id="floating-hearts"></div>
 
   <!-- Nav -->
   <nav>
@@ -947,27 +1070,27 @@
           <p class="feature-desc">A custom-designed adorable ghost icon that looks perfect in your dock. Pink, pastel, and unmistakably cute &mdash; your terminal has never looked this good.</p>
         </div>
         <div class="feature-card reveal">
-          <span class="feature-icon">🎀</span>
+          <span class="feature-icon">🩷</span>
           <h3 class="feature-title">Pastel Colour Scheme</h3>
           <p class="feature-desc">Pre-configured with a dreamy pastel palette &mdash; soft pinks, lavenders, and mints. Beautiful out of the box with no config files needed.</p>
         </div>
         <div class="feature-card reveal">
-          <span class="feature-icon">🎀</span>
+          <span class="feature-icon">✧</span>
           <h3 class="feature-title">Cute Aesthetic Touches</h3>
           <p class="feature-desc">Custom asset catalog with cute styling throughout. Every detail has been thoughtfully redesigned to bring joy to your daily terminal workflow.</p>
         </div>
         <div class="feature-card reveal">
-          <span class="feature-icon">🎀</span>
+          <span class="feature-icon">⚡</span>
           <h3 class="feature-title">100% Ghostty Under the Hood</h3>
           <p class="feature-desc">Same blazing-fast GPU-accelerated rendering, native macOS UI, splits, tabs, and every feature you love. We only changed the look, not the power.</p>
         </div>
         <div class="feature-card reveal">
-          <span class="feature-icon">🎀</span>
+          <span class="feature-icon">♡</span>
           <h3 class="feature-title">Drop-in Replacement</h3>
           <p class="feature-desc">Runs alongside or instead of regular Ghostty with its own bundle identity. Your existing Ghostty config and shell setup work perfectly.</p>
         </div>
         <div class="feature-card reveal">
-          <span class="feature-icon">🎀</span>
+          <span class="feature-icon">🌸</span>
           <h3 class="feature-title">Open Source</h3>
           <p class="feature-desc">Free and open source. Swap in your own icon, tweak the colours, or build it yourself from any Ghostty install. Make it yours.</p>
         </div>
@@ -1086,7 +1209,7 @@
       <span class="cta-ghost">
         <img src="icon.png" alt="Cute Ghostty" style="width: 64px; height: 64px; border-radius: 14px;">
       </span>
-      <h2 class="cta-title">Ready to get cute? ♡⠂⠂୨୧</h2>
+      <h2 class="cta-title">Ready to get cute? ♡୨୧♡</h2>
       <p class="cta-desc">Download Cute Ghostty and make your terminal the prettiest one on the block. ˚⋆｡</p>
       <a href="CuteGhostty.dmg" download class="btn btn-primary">
         <span class="btn-icon">🎀</span>
@@ -1163,8 +1286,41 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(el => observer.observe(el));
 
-    // ─── Typed Terminal Effect ───
-    // The terminal content is static for simplicity, but the cursor blinks
+    // ─── Floating Hearts ───
+    (function() {
+      const container = document.getElementById('floating-hearts');
+      const hearts = ['♡', '♥', '✧', '⋆', '🎀'];
+      for (let i = 0; i < 12; i++) {
+        const el = document.createElement('div');
+        el.className = 'floating-heart';
+        el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        el.style.cssText = `
+          left: ${Math.random() * 100}%;
+          --dur: ${Math.random() * 10 + 10}s;
+          --delay: ${Math.random() * 12}s;
+          --size: ${Math.random() * 12 + 10}px;
+          color: ${['#FFB2D9','#C8A2F0','#A8E6CF','#FFD4A8'][Math.floor(Math.random()*4)]};
+        `;
+        container.appendChild(el);
+      }
+    })();
+
+    // ─── Cursor Heart Trail ───
+    (function() {
+      let lastTime = 0;
+      document.addEventListener('mousemove', (e) => {
+        const now = Date.now();
+        if (now - lastTime < 120) return;
+        lastTime = now;
+        const heart = document.createElement('div');
+        heart.className = 'cursor-heart';
+        heart.textContent = ['♡', '✧', '⋆'][Math.floor(Math.random() * 3)];
+        heart.style.left = e.clientX + 'px';
+        heart.style.top = e.clientY + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 800);
+      });
+    })();
   </script>
 </body>
 </html>
