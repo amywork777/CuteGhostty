@@ -111,8 +111,6 @@
 	<string>A program running within Ghostty would like to use the camera.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>A program running within Ghostty would like to access your Contacts.</string>
-	<key>NSDockTilePlugIn</key>
-	<string>DockTilePlugin.plugin</string>
 	<key>NSHighResolutionCapable</key>
 	<true/>
 	<key>NSLocalNetworkUsageDescription</key>

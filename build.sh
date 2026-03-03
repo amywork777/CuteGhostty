@@ -64,6 +64,10 @@ cp "$ASSETS_DIR/Ghostty.icns" "$OUTPUT_APP/Contents/Resources/Ghostty.icns"
 echo "  Updating bundle identity..."
 cp "$ASSETS_DIR/Info.plist" "$OUTPUT_APP/Contents/Info.plist"
 
+# 3b. Remove the Dock Tile plugin (causes memory leak under different bundle ID)
+echo "  Removing Dock Tile plugin..."
+rm -rf "$OUTPUT_APP/Contents/PlugIns/DockTilePlugin.plugin"
+
 # 4. Update the Assets.car if we have a custom one
 if [ -f "$ASSETS_DIR/Assets.car" ]; then
     echo "  Applying custom asset catalog..."
