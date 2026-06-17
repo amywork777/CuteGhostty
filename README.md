@@ -6,12 +6,11 @@
 
 <p align="center">
   <strong>The same Ghostty you love, but cuter.</strong><br>
-  Pastel themes, a pink-screen kawaii icon, and an adorable launch greeting &mdash; running the real, blazing-fast Ghostty.
+  Cute pastel colours, adorable emojis, kawaii icon &mdash; same blazing-fast terminal.
 </p>
 
 <p align="center">
-  <a href="#install">Install</a> &bull;
-  <a href="#themes">Themes</a> &bull;
+  <a href="https://github.com/amywork777/CuteGhostty/releases/download/v0.2/CuteGhostty.dmg">Download</a> &bull;
   <a href="https://cute-ghostty.vercel.app">Website</a> &bull;
   <a href="https://ghostty.org">Ghostty</a>
 </p>
@@ -20,87 +19,53 @@
 
 ## What is this?
 
-Cute Ghostty makes [Ghostty](https://ghostty.org) cute &mdash; **pastel colour themes, a
-pink-screen icon, and an optional cute launch greeting**. It is *not* a separate
-terminal: you run the real, upstream Ghostty binary and Cute Ghostty just layers the
-cute look on top via config. That means you always get Ghostty's GPU-accelerated
-speed, native macOS UI, and every upstream fix &mdash; no fork, no stale build.
+Cute Ghostty is [Ghostty](https://ghostty.org) with a cute makeover. It's the exact same terminal emulator under the hood &mdash; same GPU-accelerated rendering, same native macOS UI, same features &mdash; just with cute pastel colours, a kawaii icon, and adorable aesthetic touches.
 
-There are two ways to get it, and they're **equally supported**:
+[Ghostty](https://github.com/ghostty-org/ghostty) is an incredible open-source terminal emulator created by Mitchell Hashimoto. We just made it cuter.
 
-1. **Drop-in config** &mdash; install stock Ghostty, then run our installer to add the
-   themes, icon, and greeting. Recommended for most people.
-2. **Build-your-own `.app`** &mdash; produce a "Cute Ghostty.app" (own name + icon) from
-   your current Ghostty, if you want a separate app in your dock.
+## Download
 
-## Install
+Grab the latest build: **[CuteGhostty.dmg](https://github.com/amywork777/CuteGhostty/releases/download/v0.2/CuteGhostty.dmg)**
 
-### Option 1 — Drop-in config (recommended)
+1. Open the DMG and drag **Cute Ghostty.app** to your Applications folder
+2. Launch and enjoy!
 
-```bash
-# 1. Install Ghostty (if you don't have it)
-brew install --cask ghostty   # or grab it from https://ghostty.org
+**Requirements:** macOS 13.0+ &bull; Universal binary (Apple Silicon + Intel)
 
-# 2. Get Cute Ghostty and install
-git clone https://github.com/amywork777/CuteGhostty.git
-cd CuteGhostty
-./install.sh
-```
+## Or: just the config (themes, icon &amp; greeting)
 
-`./install.sh` adds an `include` line to your `~/.config/ghostty/config` (it backs
-up anything it touches). Prefer to make it your whole config? Use `./install.sh
---replace`. To remove everything: `./install.sh --uninstall`.
-
-Restart Ghostty and you're cute. Because this *is* your Ghostty config, opening
-**Settings (⌘ ,)** opens the cute config &mdash; edit colours and the icon right there.
-
-### Option 2 — Build your own Cute Ghostty.app
+Don't want to download an app? Apply the cute look to your *existing* Ghostty &mdash;
+this is the "can it just be a config file?" path. You get the pastel themes, the
+pink-screen icon, and an optional launch greeting, running your own stock Ghostty.
 
 ```bash
 git clone https://github.com/amywork777/CuteGhostty.git
 cd CuteGhostty
-
-# Point it at your CURRENT Ghostty so you get the latest upstream binary
-./build.sh /Applications/Ghostty.app
-cp -R "Cute Ghostty.app" /Applications/
-
-# Then add the themes / icon config / greeting
-./install.sh
+./install.sh                 # adds the cute config (backs up anything it touches)
+# ./install.sh --replace     # make it your whole config instead
+# ./install.sh --uninstall   # remove it
 ```
 
-The `.app` is a name + icon reskin of *your* Ghostty &mdash; it keeps the stock bundle
-identifier and reads the same `~/.config/ghostty/config`, so the cute config applies
-to it too.
+Restart Ghostty and you're cute. Because this *is* your Ghostty config, **Settings
+(⌘ ,) opens the cute config** &mdash; tweak colours right there.
 
-> **Note:** keep only one of stock Ghostty / Cute Ghostty.app installed at a time &mdash;
-> they share the `com.mitchellh.ghostty` bundle identifier (this is deliberate; it's
-> what avoids the old memory-leak and wrong-config problems).
+### Themes
 
-**Requirements:** macOS 13.0+ &bull; Apple Silicon + Intel (whatever your Ghostty supports)
-
-## Themes
-
-A family of pastel themes, each keyed on a background hue. Pick one in your config:
+A family of pastel themes &mdash; pick one in your config:
 
 ```
-# auto-switch with the system appearance:
-theme = "light:Cute Pink,dark:Cute Pastel Dreams"
-
+theme = "light:Cute Pink,dark:Cute Pastel Dreams"   # auto light/dark
 # or just one:
 theme = "Cute Mint"
 ```
 
-| Light | Dark |
-|-------|------|
-| Cute Pink · Cute Lavender · Cute Mint · Cute Peach · Cute Lemon · Cute Sky | Cute Pastel Dreams · Cute Midnight Pink · Cute Midnight Lavender · Cute Midnight Mint |
+Light: Cute Pink &middot; Cute Lavender &middot; Cute Mint &middot; Cute Peach &middot; Cute Lemon &middot; Cute Sky<br>
+Dark: Cute Pastel Dreams &middot; Cute Midnight Pink &middot; Cute Midnight Lavender &middot; Cute Midnight Mint
 
-They install into `~/.config/ghostty/themes/` and use Ghostty's standard theme
-format, so they show up in Ghostty's theme list too.
+They live in `themes/` (Ghostty's standard theme format) and install into
+`~/.config/ghostty/themes/`.
 
-## The cute icon
-
-Set entirely via Ghostty config (no patched binary) &mdash; it keeps Ghostty's own ghost
-and aluminum frame, tinting only the screen pink:
+### Icon (via config)
 
 ```
 macos-icon = custom-style
@@ -108,34 +73,72 @@ macos-icon-frame = aluminum
 macos-icon-screen-color = #FF6FA3
 ```
 
-## Cute launch greeting (optional)
+### Cute launch greeting (optional)
 
-A pink ghost + a random cute message on each new shell. Opt in by adding one line to
-your `~/.zshrc` (the installer offers this):
+A pink ghost + a random sweet message on each new shell. Add one line to `~/.zshrc`:
 
 ```bash
 source /path/to/CuteGhostty/cute-greeting.sh
 ```
 
-## Repo structure
+## Build It Yourself
+
+Want to build Cute Ghostty from a stock Ghostty install? The build script takes any Ghostty.app and applies the cute customizations:
+
+```bash
+git clone https://github.com/amywork777/CuteGhostty.git
+cd CuteGhostty
+
+# Pass your Ghostty.app path
+./build.sh /Applications/Ghostty.app
+
+# Install it
+cp -R "Cute Ghostty.app" /Applications/
+```
+
+To also create a distributable zip:
+```bash
+ZIP=1 ./build.sh /Applications/Ghostty.app
+```
+
+## What's Different from Ghostty?
+
+- Custom kawaii app icon (pink Hello Kitty-style ghost)
+- Custom bundle identity (`com.amy.cute-ghostty`)
+- Custom display name ("Cute Ghostty")
+- Custom asset catalog with cute styling
+- That's it! Everything else is pure Ghostty
+
+## Repo Structure
 
 ```
-cute-ghostty.config   # the cute config (icon + theme selection + touches)
-themes/               # Cute Pink, Cute Pastel Dreams, … (Ghostty theme format)
-install.sh            # safe installer / --replace / --uninstall
-cute-greeting.sh      # opt-in launch greeting (ghost + cute messages)
-build.sh              # optional: build Cute Ghostty.app from your current Ghostty
-assets/               # icon, dmg background, Info.plist (name only)
-site/                 # the website
+install.sh                # Apply themes + icon + greeting to stock Ghostty
+cute-ghostty.config       # The cute config (icon + theme selection)
+cute-greeting.sh          # Optional cute launch greeting
+themes/                   # Cute Pink, Cute Pastel Dreams, … (Ghostty theme format)
+build.sh                  # Build script - takes stock Ghostty and makes it cute
+assets/
+  Ghostty.icns            # The cute app icon (Apple icon format)
+  Assets.car              # Compiled asset catalog with cute styling
+  Info.plist              # Bundle configuration (ID, name, permissions)
+  icon-512.png            # Icon preview at 512px
+  icon-1024.png           # Icon preview at 1024px
+Cute Ghostty.app/         # Pre-built app bundle (ready to use)
 ```
 
 ## Contributing
 
-Contributions welcome! Ideas:
+Contributions are welcome! Ideas:
 
-- **New themes** &mdash; add a `themes/Cute <Name>` file (pastel, cottagecore, etc.)
-- **Icon variants** &mdash; alternative `macos-icon-*` recipes
-- **Greeting messages** &mdash; more cute lines for `cute-greeting.sh`
+- **New icon designs** &mdash; alternative cute icons for people to swap in
+- **Colour themes** &mdash; cute Ghostty config themes (pastel, kawaii, cottagecore, etc.)
+- **Build improvements** &mdash; CI/CD, notarization support, version bumping
+- **Asset tooling** &mdash; scripts to generate Assets.car from source images
+
+To customize the icon:
+1. Edit `assets/Ghostty.icns` (use an icon editor or `iconutil`)
+2. Run `./build.sh /Applications/Ghostty.app`
+3. Test your new Cute Ghostty!
 
 ## Credits
 
@@ -144,5 +147,4 @@ Contributions welcome! Ideas:
 
 ## License
 
-Based on [Ghostty](https://github.com/ghostty-org/ghostty), licensed under the
-[MIT License](https://github.com/ghostty-org/ghostty/blob/main/LICENSE).
+Based on [Ghostty](https://github.com/ghostty-org/ghostty), licensed under the [MIT License](https://github.com/ghostty-org/ghostty/blob/main/LICENSE).
