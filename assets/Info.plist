@@ -55,7 +55,7 @@
 	<key>CFBundleIconName</key>
 	<string>Ghostty</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.amy.cute-ghostty</string>
+	<string>com.mitchellh.ghostty</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

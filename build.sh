@@ -49,6 +49,8 @@ OUTPUT_APP="$SCRIPT_DIR/Cute Ghostty.app"
 DMG_PATH="$SCRIPT_DIR/site/CuteGhostty.dmg"
 
 echo "♡ Building Cute Ghostty..."
+echo "  Tip: build from the CURRENT Ghostty (https://ghostty.org) so you get"
+echo "  upstream performance and fixes — this script does not recompile Ghostty."
 echo ""
 
 # 1. Copy the stock Ghostty app
@@ -64,9 +66,10 @@ cp "$ASSETS_DIR/Ghostty.icns" "$OUTPUT_APP/Contents/Resources/Ghostty.icns"
 echo "  Updating bundle identity..."
 cp "$ASSETS_DIR/Info.plist" "$OUTPUT_APP/Contents/Info.plist"
 
-# 3b. Remove the Dock Tile plugin (causes memory leak under different bundle ID)
-echo "  Removing Dock Tile plugin..."
-rm -rf "$OUTPUT_APP/Contents/PlugIns/DockTilePlugin.plugin"
+# NOTE: We intentionally keep the stock bundle identifier (com.mitchellh.ghostty)
+# and the DockTilePlugin. Changing the bundle ID + stripping plugins was the source
+# of the reported memory leak (#6) and the wrong-config behaviour (#3); leaving them
+# untouched keeps this a name+icon reskin of the real Ghostty.
 
 # 4. Update the Assets.car if we have a custom one
 if [ -f "$ASSETS_DIR/Assets.car" ]; then
@@ -148,5 +151,9 @@ else
     fi
 fi
 
+echo ""
+echo "  Next: run ./install.sh to add the cute themes, pink-screen icon config,"
+echo "  and optional launch greeting (Cute Ghostty reads ~/.config/ghostty/config,"
+echo "  the same path as stock Ghostty)."
 echo ""
 echo "  ♡ All done!"
