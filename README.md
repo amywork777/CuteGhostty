@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/amywork777/CuteGhostty/releases/download/v0.2/CuteGhostty.dmg">Download</a> &bull;
+  <a href="https://github.com/amywork777/CuteGhostty/releases/latest/download/CuteGhostty.dmg">Download</a> &bull;
   <a href="https://cute-ghostty.vercel.app">Website</a> &bull;
   <a href="https://ghostty.org">Ghostty</a>
 </p>
@@ -25,7 +25,14 @@ Cute Ghostty is [Ghostty](https://ghostty.org) with a cute makeover. It's the ex
 
 ## Download
 
-Grab the latest build: **[CuteGhostty.dmg](https://github.com/amywork777/CuteGhostty/releases/download/v0.2/CuteGhostty.dmg)**
+Grab the latest published build: **[CuteGhostty.dmg](https://github.com/amywork777/CuteGhostty/releases/latest/download/CuteGhostty.dmg)**
+
+The app bundle does not automatically track upstream Ghostty releases. For the
+current upstream binary with Cute Ghostty styling, use the config-only option
+below. Reports of [higher CPU usage](https://github.com/amywork777/CuteGhostty/issues/5)
+and a [recurring memory leak](https://github.com/amywork777/CuteGhostty/issues/6)
+in distributed app builds remain under investigation; rebuilding or installing
+the config is not a verified fix for those reports.
 
 1. Open the DMG and drag **Cute Ghostty.app** to your Applications folder
 2. Launch and enjoy!
@@ -83,23 +90,41 @@ source /path/to/CuteGhostty/cute-greeting.sh
 
 ## Build It Yourself
 
-Want to build Cute Ghostty from a stock Ghostty install? The build script takes any Ghostty.app and applies the cute customizations:
+Building the app requires **macOS** and a stock Ghostty.app. No paid Apple
+Developer membership is required for an ad-hoc, local build. The script keeps
+the source app's version/build metadata, rebrands the bundle, removes the Dock
+Tile plugin, and signs with the same permission entitlements as upstream Ghostty.
+
+For a local app without a DMG:
 
 ```bash
 git clone https://github.com/amywork777/CuteGhostty.git
 cd CuteGhostty
 
 # Pass your Ghostty.app path
-./build.sh /Applications/Ghostty.app
+SKIP_DMG=1 ./build.sh /Applications/Ghostty.app
 
 # Install it
 cp -R "Cute Ghostty.app" /Applications/
 ```
 
-To also create a distributable zip:
+To create a DMG, install `create-dmg` first:
 ```bash
-ZIP=1 ./build.sh /Applications/Ghostty.app
+brew install create-dmg
+SKIP_NOTARIZE=1 ./build.sh /Applications/Ghostty.app
 ```
+
+The DMG is written to `site/CuteGhostty.dmg`; public download links use GitHub
+Releases, so a local build does not publish a release. ZIP output is not supported.
+Without a Developer ID certificate the app is signed ad-hoc and is not a
+Gatekeeper-approved public distribution. For distribution, use a Developer ID
+certificate, configure a `notarytool` keychain profile (the script defaults to
+`AC_PASSWORD`, or set `AC_PASSWORD` to the profile name), and omit `SKIP_NOTARIZE`.
+Never put signing credentials in this repository.
+
+See [macOS verification](docs/macos-verification.md) for permission and
+performance checks before publishing a rebuilt app. Source changes do not update
+an existing release's DMG.
 
 ## What's Different from Ghostty?
 
@@ -107,6 +132,7 @@ ZIP=1 ./build.sh /Applications/Ghostty.app
 - Custom bundle identity (`com.amy.cute-ghostty`)
 - Custom display name ("Cute Ghostty")
 - Custom asset catalog with cute styling
+- Explicit upstream permission entitlements when re-signing, including microphone access
 - That's it! Everything else is pure Ghostty
 
 ## Repo Structure
@@ -118,9 +144,10 @@ cute-greeting.sh          # Optional cute launch greeting
 themes/                   # Cute Pink, Cute Pastel Dreams, … (Ghostty theme format)
 build.sh                  # Build script - takes stock Ghostty and makes it cute
 assets/
+  Ghostty.entitlements    # Upstream permissions applied during code signing
   Ghostty.icns            # The cute app icon (Apple icon format)
   Assets.car              # Compiled asset catalog with cute styling
-  Info.plist              # Bundle configuration (ID, name, permissions)
+  Info.plist              # Historical bundle metadata (build.sh now edits the source app's plist)
   icon-512.png            # Icon preview at 512px
   icon-1024.png           # Icon preview at 1024px
 Cute Ghostty.app/         # Pre-built app bundle (ready to use)
@@ -134,6 +161,11 @@ Contributions are welcome! Ideas:
 - **Colour themes** &mdash; cute Ghostty config themes (pastel, kawaii, cottagecore, etc.)
 - **Build improvements** &mdash; CI/CD, notarization support, version bumping
 - **Asset tooling** &mdash; scripts to generate Assets.car from source images
+
+Run `python3 scripts/test-build.py -v`, `bash scripts/validate-themes.sh`, and
+`bash -n build.sh install.sh cute-greeting.sh scripts/validate-themes.sh` for the
+cross-platform checks. Packaging tests mock macOS tools; they do not replace the
+[macOS verification steps](docs/macos-verification.md).
 
 To customize the icon:
 1. Edit `assets/Ghostty.icns` (use an icon editor or `iconutil`)

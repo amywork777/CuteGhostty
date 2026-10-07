@@ -8,7 +8,7 @@
 #   - Replaces the app icon with the cute kawaii icon
 #   - Updates the bundle identity to com.amy.cute-ghostty
 #   - Sets the display name to "Cute Ghostty"
-#   - Applies the custom Info.plist
+#   - Preserves upstream version metadata and updates bundle branding
 #   - Code signs with Developer ID (or ad-hoc if unavailable)
 #   - Creates a styled DMG with Applications shortcut
 #   - Notarizes the DMG (if credentials are configured)
@@ -45,8 +45,24 @@ if [ ! -f "$SOURCE_APP/Contents/MacOS/ghostty" ]; then
     exit 1
 fi
 
+if [ "$(uname -s)" != "Darwin" ]; then
+    echo "Error: building the app requires macOS. Use ./install.sh for the config-only option."
+    exit 1
+fi
+
+if [ "${SKIP_DMG:-}" != "1" ] && ! command -v create-dmg &>/dev/null; then
+    echo "Error: create-dmg not found. Install with: brew install create-dmg"
+    echo "Or build only the app with: SKIP_DMG=1 ./build.sh /path/to/Ghostty.app"
+    exit 1
+fi
+
 OUTPUT_APP="$SCRIPT_DIR/Cute Ghostty.app"
 DMG_PATH="$SCRIPT_DIR/site/CuteGhostty.dmg"
+
+if [ "$(cd "$SOURCE_APP" && pwd -P)" = "$OUTPUT_APP" ]; then
+    echo "Error: the source app cannot be the build output. Pass a stock Ghostty.app."
+    exit 1
+fi
 
 echo "♡ Building Cute Ghostty..."
 echo ""
@@ -60,9 +76,18 @@ cp -R "$SOURCE_APP" "$OUTPUT_APP"
 echo "  Applying cute icon..."
 cp "$ASSETS_DIR/Ghostty.icns" "$OUTPUT_APP/Contents/Resources/Ghostty.icns"
 
-# 3. Replace Info.plist with our custom one
+# 3. Update bundle branding
 echo "  Updating bundle identity..."
-cp "$ASSETS_DIR/Info.plist" "$OUTPUT_APP/Contents/Info.plist"
+PLIST="$OUTPUT_APP/Contents/Info.plist"
+plutil -replace CFBundleIdentifier -string com.amy.cute-ghostty "$PLIST"
+plutil -replace CFBundleDisplayName -string 'Cute Ghostty' "$PLIST"
+plutil -replace CFBundleName -string 'Cute Ghostty' "$PLIST"
+plutil -replace CFBundleIconFile -string Ghostty "$PLIST"
+plutil -replace CFBundleIconName -string Ghostty "$PLIST"
+plutil -replace SUEnableAutomaticChecks -bool NO "$PLIST"
+if plutil -extract NSDockTilePlugIn raw -o - "$PLIST" >/dev/null 2>&1; then
+    plutil -remove NSDockTilePlugIn "$PLIST"
+fi
 
 # 3b. Remove the Dock Tile plugin (causes memory leak under different bundle ID)
 echo "  Removing Dock Tile plugin..."
@@ -85,14 +110,13 @@ fi
 
 if [ -n "${CODESIGN_IDENTITY:-}" ]; then
     echo "  Signing with: $CODESIGN_IDENTITY"
-    codesign --force --deep --sign "$CODESIGN_IDENTITY" --options runtime "$OUTPUT_APP"
+    codesign --force --deep --sign "$CODESIGN_IDENTITY" --options runtime --entitlements "$ASSETS_DIR/Ghostty.entitlements" "$OUTPUT_APP"
 else
     echo "  No Developer ID found — signing ad-hoc (DMG will not pass Gatekeeper)."
     echo "  To sign properly, install a Developer ID Application certificate and re-run."
-    codesign --force --deep --sign - "$OUTPUT_APP" 2>/dev/null || {
-        echo "  Warning: ad-hoc codesign failed."
-    }
+    codesign --force --deep --sign - --options runtime --entitlements "$ASSETS_DIR/Ghostty.entitlements" "$OUTPUT_APP"
 fi
+codesign --verify --deep --strict "$OUTPUT_APP"
 
 echo ""
 echo "  ✩ Cute Ghostty.app is ready."
@@ -102,11 +126,6 @@ echo ""
 if [ "${SKIP_DMG:-}" = "1" ]; then
     echo "  Skipping DMG creation (SKIP_DMG=1)."
 else
-    if ! command -v create-dmg &>/dev/null; then
-        echo "  Error: create-dmg not found. Install with: brew install create-dmg"
-        exit 1
-    fi
-
     echo "  Creating styled DMG..."
     mkdir -p "$SCRIPT_DIR/site"
     rm -f "$DMG_PATH"
